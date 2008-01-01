@@ -7,6 +7,7 @@ License:	GPL v2+
 Group:		Applications/System
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	587c37904592ea99f61d8535ad69b7fe
+Patch0:		%{name}-smallfixes.patch
 URL:		http://git.fedoraproject.org/
 BuildRequires:	popt-devel
 BuildRequires:	python-devel
@@ -27,9 +28,10 @@ isomd5sum implanting and checking.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__make}
+CC="gcc" %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
