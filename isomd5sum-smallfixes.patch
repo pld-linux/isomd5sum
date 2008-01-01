@@ -1,0 +1,62 @@
+diff -ur -x '*.m4' -x ltmain.sh -x install-sh -x depcomp -x Makefile.in -x compile -x 'config.*' -x configure -x missing -x mkinstalldirs -x autom4te.cache isomd5sum-1.0.2.ori/Makefile isomd5sum-1.0.2.mod/Makefile
+--- isomd5sum-1.0.2.ori/Makefile	2007-12-10 16:34:36.000000000 +0100
++++ isomd5sum-1.0.2.mod/Makefile	2008-01-01 15:39:54.284947915 +0100
+@@ -19,18 +19,20 @@
+ all: implantisomd5 checkisomd5 pyisomd5sum.so libimplantisomd5.a libcheckisomd5.a
+ 
+ %.o: %.c
+-	gcc -c -O $(CFLAGS) -o $@ $<
++	$(CC) -c -O $(CFLAGS) -o $@ $<
+ 
+ implantisomd5: implantisomd5.o libimplantisomd5.a
++	$(CC) $(LDFLAGS) -o $@ $^
+ 
+ checkisomd5: checkisomd5.o libcheckisomd5.a
++	$(CC) $(LDFLAGS) -o $@ $^
+ 
+ libimplantisomd5.a: libimplantisomd5.a(libimplantisomd5.o md5.o)
+ 
+ libcheckisomd5.a: libcheckisomd5.a(libcheckisomd5.o md5.o)
+ 
+ pyisomd5sum.so: $(PYOBJS)
+-	gcc -shared -g -o pyisomd5sum.so -fpic $(PYOBJS) $(LDFLAGS)
++	$(CC) -shared -g -o pyisomd5sum.so -fpic $(PYOBJS) $(LDFLAGS)
+ 
+ install: all
+ 	mkdir -p $(DESTDIR)/usr/$(LIBDIR)/$(PYTHON)/site-packages
+diff -ur -x '*.m4' -x ltmain.sh -x install-sh -x depcomp -x Makefile.in -x compile -x 'config.*' -x configure -x missing -x mkinstalldirs -x autom4te.cache isomd5sum-1.0.2.ori/checkisomd5.c isomd5sum-1.0.2.mod/checkisomd5.c
+--- isomd5sum-1.0.2.ori/checkisomd5.c	2007-12-10 16:34:36.000000000 +0100
++++ isomd5sum-1.0.2.mod/checkisomd5.c	2008-01-01 15:43:01.094913541 +0100
+@@ -60,7 +60,7 @@
+     int i;
+     int rc;
+     struct progressCBData data;
+-    int verbose;
++    int verbose = 0; 
+     int md5only;
+     int filearg;
+     char * result;
+@@ -87,6 +87,11 @@
+ 	    break;
+     }
+ 
++    if(argv[filearg] == NULL) {
++	printf("No filename argument\n");
++	exit(0);
++    }
++
+     if (md5only|verbose)
+ 	printMD5SUM(argv[filearg]);
+ 
+diff -ur -x '*.m4' -x ltmain.sh -x install-sh -x depcomp -x Makefile.in -x compile -x 'config.*' -x configure -x missing -x mkinstalldirs -x autom4te.cache isomd5sum-1.0.2.ori/implantisomd5.c isomd5sum-1.0.2.mod/implantisomd5.c
+--- isomd5sum-1.0.2.ori/implantisomd5.c	2007-12-10 16:34:36.000000000 +0100
++++ isomd5sum-1.0.2.mod/implantisomd5.c	2008-01-01 15:36:00.221536812 +0100
+@@ -27,7 +27,7 @@
+ 
+ 
+ static void usage(void) {
+-    fprintf(stderr, "implantisomd5:         implantisomd5 [--force] [--supported] <isofilename>\n");
++    fprintf(stderr, "implantisomd5:         implantisomd5 [--force] [--supported-iso] <isofilename>\n");
+     exit(1);
+ }
+ 
