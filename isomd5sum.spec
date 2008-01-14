@@ -1,4 +1,3 @@
-# TODO: optflags
 Summary:	Utilities for working with md5sum implanted in ISO images
 Summary(pl.UTF-8):	Narzędzia do obsługi sum MD5 wszczepionych w obrazy ISO
 Name:		isomd5sum
@@ -27,7 +26,7 @@ wszczepionych w obrazy ISO9660.
 Summary:	Development headers and library for using isomd5sum
 Summary(pl.UTF-8):	Pliki nagłówkowe i biblioteka do używania isomd5sum
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+# doesn't require base
 
 %description devel
 This contains header files and a library for working with the
@@ -42,8 +41,9 @@ sprawdzania sum MD5 obrazów ISO.
 %patch0 -p1
 
 %build
-CC="%{__cc}" \
-%{__make}
+%{__make} \
+	CC="%{__cc}" \
+	RPM_OPT_FLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -56,12 +56,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING
+%doc README
 %attr(755,root,root) %{_bindir}/checkisomd5
 %attr(755,root,root) %{_bindir}/implantisomd5
 %attr(755,root,root) %{py_sitedir}/pyisomd5sum.so
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*.h
-%{_libdir}/*.a
+%{_includedir}/lib*isomd5.h
+%{_libdir}/lib*isomd5.a
