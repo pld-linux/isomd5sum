@@ -60,3 +60,15 @@ diff -ur -x '*.m4' -x ltmain.sh -x install-sh -x depcomp -x Makefile.in -x compi
      exit(1);
  }
  
+diff -Nur isomd5sum-1.0.2-orig/Makefile isomd5sum-1.0.2/Makefile
+--- isomd5sum-1.0.2-orig/Makefile	2008-04-30 16:15:30.000000000 +0000
++++ isomd5sum-1.0.2/Makefile	2008-04-30 16:15:41.000000000 +0000
+@@ -2,7 +2,7 @@
+ PYTHON = python$(PYVER)
+ PYTHONINCLUDE = /usr/include/$(PYTHON)
+ 
+-ifneq (,$(filter ppc64 x86_64 s390x,$(shell uname -m)))
++ifneq (,$(filter ppc64 x86_64 s390x sparc64,$(shell uname -m)))
+ LIBDIR = lib64
+ else
+ LIBDIR = lib
