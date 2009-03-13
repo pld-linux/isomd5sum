@@ -2,7 +2,7 @@ Summary:	Utilities for working with md5sum implanted in ISO images
 Summary(pl.UTF-8):	Narzędzia do obsługi sum MD5 wszczepionych w obrazy ISO
 Name:		isomd5sum
 Version:	1.0.2
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/System
