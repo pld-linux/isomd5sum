@@ -12,6 +12,7 @@ Patch0:		%{name}-smallfixes.patch
 URL:		http://git.fedoraproject.org/
 BuildRequires:	popt-devel
 BuildRequires:	python-devel
+BuildRequires:	rpm-pythonprov
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
